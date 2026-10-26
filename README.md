@@ -1,6 +1,6 @@
-# SHIELD — Embedded Road Safety System
+# Embedded Road Safety System
 
-**SHIELD** (*Système Embarqué Intelligent pour la Sécurité Routière*) is a driver assistance system that runs inside a car. It watches the road, the driver and the vehicle at the same time, and warns the driver with a screen and voice alerts.
+Embedded Road Safety System is a driver assistance system that runs inside a car. It watches the road, the driver and the vehicle at the same time, and warns the driver with a screen and voice alerts.
 
 | Part | Sensor | What it detects |
 |---|---|---|
@@ -37,31 +37,6 @@ Right: road camera on the hood and TF-Luna LiDAR at the front.</i></p>
 git clone https://github.com/AbdouNaili/SHIELD-Road-Safety-System.git
 cd SHIELD-Road-Safety-System
 ```
-
-```
-SHIELD-Road-Safety-System/
-├── raspberry-pi/            Python app (dashboard + AI)
-│   ├── main.py              start here
-│   ├── config.py            all settings (ports, cameras, thresholds)
-│   ├── app.py               dashboard
-│   ├── splash.py            start screen (waits for the ESP32)
-│   ├── road_detector.py     road camera + YOLOv8 TFLite model
-│   ├── driver_monitor.py    driver camera (eyes and mouth)
-│   ├── fault_detector.py    vehicle fault rules (OBD data)
-│   ├── serial_manager.py    link with the ESP32
-│   ├── audio_manager.py     voice alerts
-│   ├── models/              trained YOLOv8 model (.pt and .tflite)
-│   ├── sounds/              WAV alert files go here
-│   ├── sign_icons/          speed sign pictures go here
-│   ├── requirements.txt
-│   ├── launch.sh            starts the app
-│   └── setup.sh             starts the app automatically at boot
-├── esp32/esp32_main/        ESP32 firmware
-├── hardware/enclosure/      3D-printable box (STL)
-├── images/                  pictures and graphs used in this README
-└── training/                notebooks to train and export the model
-```
-
 ---
 
 ## 2. Hardware
@@ -299,31 +274,20 @@ Lines starting with `[` are debug messages and are ignored by the Pi.
 
 ---
 
-## Limits
-
-- The OBD PIDs (`22xxxx` on `7E0`, `2107` on `740`) are manufacturer-specific. They work on the test car and may not answer on other cars.
-- One OBD cycle reads 12 values and takes about 1 to 3 s, so the acceleration-based alerts react slowly.
-- The "Brake system" rule assumes some pressure stays in the brake circuit without braking. On many cars it is close to 0 bar, which would trigger this alert when driving without braking. Check it on your car.
-- If the driver's face is not visible (head down or turned), the eye check stops and the status shows "Visage non detecte".
-- The road camera image (640×480) is stretched to 416×416 for the model.
-
----
-
-## Troubleshooting
-
-| Problem | Fix |
-|---|---|
-| Start screen stays on "En attente" | Check `SERIAL_PORT`, the USB cable and the ESP32 Serial Monitor. Use **DÉMARRAGE FORCÉ** to start anyway |
-| `Permission denied: /dev/ttyUSB0` | `sudo usermod -a -G dialout $USER`, then log out and in |
-| Black video | Wrong `ROAD_CAM_INDEX` / `DRIVER_CAM_INDEX` |
-| "Modèle non chargé" in the console | Install `ai-edge-litert`, or the model's number of classes does not match `CLASS_NAMES` |
-| `sys: LIDAR_ERROR` | TF-Luna wiring (TX ↔ RX swapped?) or power |
-| ELM327 never connects | Wrong MAC address, or the adapter is not powered (ignition on) |
-| No "hands off" alert | Calibrate the touch sensor (section 3) |
-
----
-
 ## Credits
 
 - YOLOv8 by [Ultralytics](https://github.com/ultralytics/ultralytics) (AGPL-3.0)
-- Face landmarks by [MediaPipe](https://github.com/google-ai-edge/mediapipe)
+- Face landmarks by [MediaPipe](https://github.com/google-ai-edge/mediapipe) (Apache-2.0)
+
+---
+
+## License
+
+This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**. See the [LICENSE](LICENSE) file.
+
+You may use, modify and share this project, including for commercial use, as long as:
+- you keep the copyright and license notice,
+- you publish your source code under the same license if you share or run a modified version (also as an online service),
+- you clearly mark the changes you made.
+
+© 2026 AbdouNaili
