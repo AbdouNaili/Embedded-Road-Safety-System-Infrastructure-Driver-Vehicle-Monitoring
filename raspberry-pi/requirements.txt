@@ -1,0 +1,7 @@
+numpy
+opencv-python
+pillow
+pyserial
+pygame
+mediapipe
+ai-edge-litert      # TFLite runtime (or tflite-runtime / tensorflow)

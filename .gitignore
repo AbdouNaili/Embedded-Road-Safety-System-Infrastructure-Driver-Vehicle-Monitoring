@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.ipynb_checkpoints/
+
+# Training data and results (too big for git)
+training/dataset/
+training/runs/
+training/exports/
+*.cache
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Never commit secrets or private data
+.env
